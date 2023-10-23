@@ -1,17 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button, Switch } from 'react-native';
+import { StyleSheet, Text, View, Button, Switch, TextInput } from 'react-native';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       switchValue : false,
+      textInput: '',
     }
   }
 
-  onPressLearnMore() {
-    console.warn(`Presionaste el boton de "Learn More"`)
+  onPressLearnMore = () => {
+    alert(this.state.textInput)
   }
 
   onChange = value => {
@@ -22,6 +23,16 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <TextInput
+          style={styles.input}
+          placeholder="Escribe algo..."
+          onChangeText = {text => this.setState({textInput: text})}
+          value = {this.state.textInput}
+        />
+        <Switch
+          onValueChange={() => this.onChange(!this.state.switchValue)}
+          value = {this.state.switchValue}
+        />
         <Button
           onPress={this.onPressLearnMore}
           title={"Learn More"}
@@ -32,10 +43,6 @@ export default class App extends Component {
           style={styles.text}>
           Esto es React Native   
         </Text>
-        <Switch
-          onValueChange={() => this.onChange(!this.state.switchValue)}
-          value = {this.state.switchValue}
-        />
         <StatusBar style="auto" />
       </View>
     );
@@ -57,5 +64,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: 150,
     height: 150,
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    borderColor: '#fff',
+    color: '#fff',
+    padding: 10,
   }
 });
